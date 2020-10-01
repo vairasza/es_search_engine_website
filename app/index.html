@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <div class="version-switch">
+    <div class="version-switch-container">
         <label class="switch">
             <input type="checkbox" class="switch-input">
             <span class="slider round"></span>
@@ -16,59 +16,69 @@
         <span class="version-switch-text">Currently using version: <span class="es-search-version"></span></span>
     </div>
 
-    <div class="chatbox">
-        <div class="title">
-            <h1 id="title" class="title">ES Search Engine</h1>
+    <div class="error-container"></div>
+
+    <div class="search-engine-container">
+        <div class="title-container">
+            <h1 class="title">ES Search Engine for 1 Million Articles Database</h1>
         </div>
 
-        <div class="controls">
+        <div class="input-container">
             <!-- need more inputs here like uni bib -->
-            <input type="checkbox" class="checkbox-title">
-            <p>Title:</p>
-            <input type="text" class="input-write-title" placeholder="search title" minlength="0" maxlength="40" />
+            <div class ="wrapper wrapper-title">
+                <input type="checkbox" class="checkbox checkbox-title">
+                <p>Title:</p>
+                <input type="text" class="input-title" placeholder="search title" minlength="0" maxlength="40" />
+            </div>
+            
 
-            <input type="checkbox" class="checkbox-content">
-            <p>Content:</p>
-            <input type="text" class="input-write-content" placeholder="Type in a topic..." minlength="0" maxlength="40" />
-
-            <p>Media Type:</p>
-            <input type="checkbox" class="checkbox-media-type">
-            <datalist class="input-media-type">
-                <option value="News">
-                <option value="Blog">
+            <div class ="wrapper wrapper-content">
+                <input type="checkbox" class="checkbox checkbox-content">
+                <p>Content:</p>
+                <input type="text" class="input-content" placeholder="search content" minlength="0" maxlength="40" />
+            </div>
+            
+            <div class ="wrapper wrapper-media-type">
+                <input type="checkbox" class="checkbox checkbox-media-type">
+                <p>Media Type:</p>
+                <input list="list-media-type" class="input-media-type">
+                <datalist id="list-media-type">
+                    <option value="News">
+                    <option value="Blog">
                     <!-- load more on start -->
-            </datalist>
+                </datalist>
+            </div>
+            
 
-            <p>Source:</p>
-            <input type="checkbox" class="checkbox-source">
-            <datalist class="input-source">
-                <option value="Huffington Post">
+            <div class ="wrapper wrapper-source">
+                <input type="checkbox" class="checkbox checkbox-source">
+                <p>Source:</p>
+                <input list="list-source" class="input-source">
+                <datalist id="list-source">
+                    <option value="Huffington Post">
+                    <option value="New York Times"></option>
                     <!-- load more on start // replace for empty input field if too many sources -->
-            </datalist>
-
-            <p>Published from ... to ...:</p>
-            <input type="checkbox" class="checkbox-published">
-            <input type="date" class="input-published-from">
-            <input type="date" class="input-published-until">
-
+                </datalist>
+            </div>
+            
+            <div class ="wrapper wrapper-published">
+                <input type="checkbox" class="checkbox checkbox-published">
+                <p>Published from ... to ... :</p>
+                <input type="date" class="input-published-from">
+                <input type="date" class="input-published-to">
+            </div>
+            
+            <button class="button button-reset-input" type="button">Reset </button>
             <button class="button button-search-request" type="button">Search</button>
         </div>
 
-        <div class="result-box">
-            <span class="result-box-single">
-                <p class="result-title"></p>
-                <p class="result-content"></p>
-                <p class="result-media-type"></p>
-                <p class="result-source"></p>
-                <p class="result-published"></p>
-                <p class="result-metrics"></p>
-            </span>
+        <div class="result-container">
             <!-- render K=10 results here -->
         </div>
 
     </div>
 
-    <footer>
+    <footer class="footer">
         <span>References:</span>
         <span></span>
     </footer>
