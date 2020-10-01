@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES Search Engine</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+    <div class="version-switch">
+        <label class="switch">
+            <input type="checkbox" class="switch-input">
+            <span class="slider round"></span>
+        </label>
+        <span class="version-switch-text">Currently using version: <span class="es-search-version"></span></span>
+    </div>
+
+    <div class="chatbox">
+        <div class="title">
+            <h1 id="title" class="title">ES Search Engine</h1>
+        </div>
+
+        <div class="controls">
+            <!-- need more inputs here like uni bib -->
+            <input type="checkbox" class="checkbox-title">
+            <p>Title:</p>
+            <input type="text" class="input-write-title" placeholder="search title" minlength="0" maxlength="40" />
+
+            <input type="checkbox" class="checkbox-content">
+            <p>Content:</p>
+            <input type="text" class="input-write-content" placeholder="Type in a topic..." minlength="0" maxlength="40" />
+
+            <p>Media Type:</p>
+            <input type="checkbox" class="checkbox-media-type">
+            <datalist class="input-media-type">
+                <option value="News">
+                <option value="Blog">
+                    <!-- load more on start -->
+            </datalist>
+
+            <p>Source:</p>
+            <input type="checkbox" class="checkbox-source">
+            <datalist class="input-source">
+                <option value="Huffington Post">
+                    <!-- load more on start // replace for empty input field if too many sources -->
+            </datalist>
+
+            <p>Published from ... to ...:</p>
+            <input type="checkbox" class="checkbox-published">
+            <input type="date" class="input-published-from">
+            <input type="date" class="input-published-until">
+
+            <button class="button button-search-request" type="button">Search</button>
+        </div>
+
+        <div class="result-box">
+            <span class="result-box-single">
+                <p class="result-title"></p>
+                <p class="result-content"></p>
+                <p class="result-media-type"></p>
+                <p class="result-source"></p>
+                <p class="result-published"></p>
+                <p class="result-metrics"></p>
+            </span>
+            <!-- render K=10 results here -->
+        </div>
+
+    </div>
+
+    <footer>
+        <span>References:</span>
+        <span></span>
+    </footer>
+
+    <script type="module" src="./js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{
+  "name": "es_search_engine_website",
+  "version": "1.0.0",
+  "description": "Frontend for Elasticsearch Search Engine -- Study Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./startServer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vairasza/es_search_engine_website.git"
+  },
+  "keywords": [
+    "information",
+    "retrieval",
+    "elasticsearch",
+    "query",
+    "search",
+    "engine",
+    "serp",
+    "frontend"
+  ],
+  "author": "michael bierschneider <vairasza>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vairasza/es_search_engine_website/issues"
+  },
+  "homepage": "https://github.com/vairasza/es_search_engine_website#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.10.0"
+  }
+}
