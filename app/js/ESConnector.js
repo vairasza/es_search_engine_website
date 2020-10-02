@@ -8,7 +8,7 @@ async function fetchAPI (url, body, method) {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: body,
+            body: JSON.stringify(body),
         })
         .then(response => response.json()); 
     }
@@ -18,27 +18,76 @@ async function fetchAPI (url, body, method) {
 }
 
 function processQuery (query) {
-    //form input object so that it will be accepted by elasticsearch
+    let newQuery = {
+        "query": {
+            "bool": {
+                "must": [],
+            },
+        },
+    };
 
-    return query;
+    if (query.title) {
+        newQuery.query.bool.must.push({ "match": { "title": query.title }});
+    }
+
+    if (query.content) {
+        newQuery.query.bool.must.push({ "match": { "content": query.content }});
+    }
+
+    if (query.mediaType) {
+        newQuery.query.bool.must.push({ "match": { "media-type": query.mediaType }});
+    }
+
+    if (query.source) {
+        newQuery.query.bool.must.push({ "match": { "source": query.source }});
+    }
+
+    if (query.publishedFrom) {
+        newQuery.query.bool.must.push({
+            "range": { 
+                "published": {
+                    "gte": query.publishedFrom,
+                    "lte": query.publishedTo,
+                },
+            },
+        });         
+    }
+
+    return { database: "studienleistung_test", request: newQuery };
 }
 
 function processResult (result) {
-    //bring response into form so renderresult can render template with valid values
+    let response = [];
 
-    return result;
+    result.body.body.hits.hits.forEach(item => {
+        /* eslint no-underscore-dangle: 0 */
+        response.push({
+            title: item._source.title,
+            content: item._source.content,
+            mediaType: item._source["media-type"],
+            source: item._source.source,
+            published: item._source.published,
+            metrics: "score: " +item. _score + " | id: " + item._id,
+        });
+    });
+
+    return response;
 }
 
 const ESConnector = {
 
-    esConnectUrl: "http://localhost:9200",
+    esConnectUrl: "http://localhost:8001/api",
+    //needs implementation for second elasticsearch database
+    version: true,
 
     async makeQuery (query, callback) {
+
         const processedQuery = processQuery(query);
 
-        const result = await fetchAPI(this.esConnectUrl, processedQuery, "GET");
+        const result = await fetchAPI(this.esConnectUrl, processedQuery, "POST");
 
-        if (result) {
+        if (result.status === 200) {
+
             const processedResult = processResult(result);
 
             callback(processedResult);

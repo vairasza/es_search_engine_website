@@ -13,10 +13,10 @@
             <input type="checkbox" class="switch-input">
             <span class="slider round"></span>
         </label>
-        <span class="version-switch-text">Currently using version: <span class="es-search-version"></span></span>
+        <span class="version-switch-text">Currently using version: <span class="es-search-version">1</span></span>
     </div>
 
-    <div class="error-container"></div>
+    <div class="error-container hidden"></div>
 
     <div class="search-engine-container">
         <div class="title-container">
@@ -24,23 +24,21 @@
         </div>
 
         <div class="input-container">
-            <!-- need more inputs here like uni bib -->
             <div class ="wrapper wrapper-title">
-                <input type="checkbox" class="checkbox checkbox-title">
                 <p>Title:</p>
-                <input type="text" class="input-title" placeholder="search title" minlength="0" maxlength="40" />
+                <input type="checkbox" class="checkbox checkbox-title">
+                <input type="text" class="input-title" placeholder="..." minlength="0" maxlength="40" />
             </div>
             
-
             <div class ="wrapper wrapper-content">
-                <input type="checkbox" class="checkbox checkbox-content">
                 <p>Content:</p>
-                <input type="text" class="input-content" placeholder="search content" minlength="0" maxlength="40" />
+                <input type="checkbox" class="checkbox checkbox-content">
+                <input type="text" class="input-content" placeholder="..." minlength="0" maxlength="40" />
             </div>
             
             <div class ="wrapper wrapper-media-type">
-                <input type="checkbox" class="checkbox checkbox-media-type">
                 <p>Media Type:</p>
+                <input type="checkbox" class="checkbox checkbox-media-type">
                 <input list="list-media-type" class="input-media-type">
                 <datalist id="list-media-type">
                     <option value="News">
@@ -49,10 +47,9 @@
                 </datalist>
             </div>
             
-
             <div class ="wrapper wrapper-source">
-                <input type="checkbox" class="checkbox checkbox-source">
                 <p>Source:</p>
+                <input type="checkbox" class="checkbox checkbox-source">
                 <input list="list-source" class="input-source">
                 <datalist id="list-source">
                     <option value="Huffington Post">
@@ -62,14 +59,16 @@
             </div>
             
             <div class ="wrapper wrapper-published">
-                <input type="checkbox" class="checkbox checkbox-published">
                 <p>Published from ... to ... :</p>
+                <input type="checkbox" class="checkbox checkbox-published">
                 <input type="date" class="input-published-from">
                 <input type="date" class="input-published-to">
             </div>
             
-            <button class="button button-reset-input" type="button">Reset </button>
-            <button class="button button-search-request" type="button">Search</button>
+            <div class="wrapper">
+                <button class="button button-reset-input" type="button">Reset Input</button>
+                <button class="button button-search-request" type="button">Search</button>
+            </div>
         </div>
 
         <div class="result-container">

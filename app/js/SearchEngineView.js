@@ -27,18 +27,22 @@ const SearchEngineView = {
     //container
     errorContainer: document.querySelector(".error-container"),
 
+    //version switch
+    versionSwitch: document.querySelector(".switch-input"),
+    versionText: document.querySelector(".es-search-version"),
+
     renderResult (content) {
         const div = document.createElement("div"),
-        parent = document.querySelector("result-container"),
+        parent = document.querySelector(".result-container"),
         templateString = 
-            `<span class="result-box-single">
-                <p class="result-title">${content.title}</p>
-                <p class="result-content">${content.content}</p>
-                <p class="result-media-type">${content.mediaType}</p>
-                <p class="result-source">${content.source}</p>
-                <p class="result-published">${content.published}</p>
-                <p class="result-metrics">${content.metrics}</p>
-            </span>`;
+            `<p class="result-title">${content.title}</p>
+            <p class="result-content">${content.content}</p>
+            <div class="result-infos">
+                <span class="result-media-type first-element"><u>Media Type:</u> ${content.mediaType}</span>
+                <span class="result-source mid-element"><u>Source:</u> ${content.source}</span>
+                <span class="result-published last-element"><u>Published:</u> ${content.published}</span>
+            </div>
+            <p class="result-metrics"><u>Metrics:</u> ${content.metrics}</p>`;
 
         div.classList.add("result-box-single");
         div.innerHTML = templateString;
@@ -130,18 +134,21 @@ const SearchEngineView = {
         this.inputPublishedTo.disabled = false;
     },
 
-    showPopup (message) {
+    showPopup (message, callback) {
         const div = document.createElement("div");
 
-        div.innerHTML = `<p class="error-message">${message}</p><button class="button button-error-confirmation" type="button">OK</button>`;
+        div.innerHTML = `<p class="error-message">${message}<button class="button button-error-confirmation" type="button">OK</button></p>`;
 
         this.errorContainer.appendChild(div);
+        this.errorContainer.classList.remove("hidden");
 
         //Checks if you sent the message and if so, displays it right in the chatbox
         //eslint-disable-next-line 
         const confirmButton = document.querySelector(".button-error-confirmation");
         confirmButton.addEventListener("click", function () {
             this.errorContainer.innerHTML = null;
+            this.errorContainer.classList.add("hidden");
+            callback();
         }.bind(this));
     },
 
