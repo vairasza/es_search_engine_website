@@ -1,6 +1,7 @@
 /* eslint-env browser */
 import ESConnector from "./ESConnector.js";
 import SearchEngineView from "./SearchEngineView.js";
+import Config from "./Config.js";
 
 function init () {
     SearchEngineView.getButtonReset().addEventListener("click", resetInput);
@@ -35,7 +36,7 @@ function makeQuery () {
             }
             else {
                 //show error message or something
-                SearchEngineView.showPopup("No results found!", () => {
+                SearchEngineView.showPopup(Config.NO_RESULT_FOUND, () => {
                     SearchEngineView.getButtonReset().addEventListener("click", resetInput);
                     SearchEngineView.getButtonSearchRequest().addEventListener("click", makeQuery);
                     SearchEngineView.unlockInput();
@@ -44,7 +45,7 @@ function makeQuery () {
         });
     }
     else {
-        SearchEngineView.showPopup("Searching requires at least one parameter!", () => {
+        SearchEngineView.showPopup(Config.NEED_SEARCH_PARAMETER, () => {
             SearchEngineView.getButtonReset().addEventListener("click", resetInput);
             SearchEngineView.getButtonSearchRequest().addEventListener("click", makeQuery);
             SearchEngineView.unlockInput();

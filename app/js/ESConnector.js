@@ -1,4 +1,5 @@
 /* eslint-env browser */
+import Config from "./Config.js";
 
 async function fetchAPI (url, body, method) {
     try {
@@ -17,6 +18,7 @@ async function fetchAPI (url, body, method) {
     }
 }
 
+/* builds a query for elasticsearch search with parameters from input fields */
 function processQuery (query) {
     let newQuery = {
         "query": {
@@ -53,9 +55,10 @@ function processQuery (query) {
         });         
     }
 
-    return { database: "studienleistung_test", request: newQuery };
+    return { database: Config.DB_NAME, request: newQuery };
 }
 
+/* remodeling data from server in order to use them properly in the render template */
 function processResult (result) {
     let response = [];
 
@@ -67,7 +70,7 @@ function processResult (result) {
             mediaType: item._source["media-type"],
             source: item._source.source,
             published: item._source.published,
-            metrics: "score: " +item. _score + " | id: " + item._id,
+            metrics: "score: " + item. _score + " | id: " + item._id,
         });
     });
 
@@ -75,8 +78,6 @@ function processResult (result) {
 }
 
 const ESConnector = {
-
-    esConnectUrl: "http://localhost:8001/api",
     //needs implementation for second elasticsearch database
     version: true,
 
@@ -84,9 +85,9 @@ const ESConnector = {
 
         const processedQuery = processQuery(query);
 
-        const result = await fetchAPI(this.esConnectUrl, processedQuery, "POST");
+        const result = await fetchAPI(Config.ES_CONNECT_URL, processedQuery, "POST");
 
-        if (result.status === 200) {
+        if (result.status === Config.STATUS_200) {
 
             const processedResult = processResult(result);
 

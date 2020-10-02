@@ -31,6 +31,7 @@ const SearchEngineView = {
     versionSwitch: document.querySelector(".switch-input"),
     versionText: document.querySelector(".es-search-version"),
 
+    /* renders processed result from elasticsearch query with fix template */
     renderResult (content) {
         const div = document.createElement("div"),
         parent = document.querySelector(".result-container"),
@@ -50,6 +51,7 @@ const SearchEngineView = {
         parent.appendChild(div);
     },
 
+    /* reads values from input fields that have a checked checkbox and puts them into an object */
     getCheckedValuesAsObject () {
         let inputValues = {
             title: (this.checkBoxTitle.checked && this.inputTitle !== "") ? this.inputTitle.value : null,
@@ -134,6 +136,7 @@ const SearchEngineView = {
         this.inputPublishedTo.disabled = false;
     },
 
+    /* shows popup with messages and ok-button if missing parameters or no results found */
     showPopup (message, callback) {
         const div = document.createElement("div");
 

@@ -1,16 +1,27 @@
 /* eslint-env node */
+
+/* constants */
+const ES_CONNECT_URL = "http://localhost:9200";
+const NODE_APP_TITLE = "es_search_engine";
+const PORT = 8001;
+
+/* imports */
 const express = require("express");
 const { Client } = require("@elastic/elasticsearch");
 const bodyParser = require("body-parser");
-const client = new Client({ node: "http://localhost:9200"});
+
+/* declarations */
+const client = new Client({ node: ES_CONNECT_URL });
 const app = express();
-const port = 8001;
 
-process.title = "es_search_engine";
+process.title = NODE_APP_TITLE;
 
+/* serve app folder to client */
 app.use(express.static("app"));
+/* allows fetch to append body */
 app.use(bodyParser.json());
 
+/* api that transfers query to server in order to use elasticsearch node package */
 app.post("/api", async (req, res) => {
 
     try {
@@ -33,7 +44,7 @@ app.post("/api", async (req, res) => {
 
 });
 
-app.listen(port, () => {
+app.listen(PORT, () => {
     //eslint-disable-next-line
-    console.log(`ES Search Engine running at http://localhost:${port}`);
+    console.log(`ES Search Engine running at http://localhost:${PORT}`);
 });
