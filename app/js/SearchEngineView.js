@@ -187,12 +187,16 @@ const SearchEngineView = {
 
     showModal () {
         this.modal.classList.remove("hidden");
-    },
+        this.buttonModal.addEventListener("click", function () {
+            hideModal(this.modal);
+        }.bind(this));
 
-    hideModal () {
-        this.modal.classList.add("hidden");
     },
 
 };
+
+function hideModal (modal) {
+    modal.classList.add("hidden");
+}
 
 export default SearchEngineView;

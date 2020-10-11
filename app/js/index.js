@@ -26,9 +26,6 @@ function init () {
     SearchEngineView.modalInfoIcon.addEventListener("click", () => {
         SearchEngineView.showModal();
     });
-    SearchEngineView.buttonModal.addEventListener("click", () => {
-        SearchEngineView.hideModal();
-    });
 }
 
 function resetInput () {
@@ -117,7 +114,7 @@ function checkValidDateInput (callback) {
 
 function switchVersion (event) {
     //change text to what ever versions we are using
-    SearchEngineView.versionText.innerHTML = (event.target.checked) ? "TF.IDF Query" : "Boolean Query";
+    SearchEngineView.versionText.innerHTML = (event.target.checked) ? Config.VERSION_TFIDF : Config.VERSION_BOOL;
     ESConnector.version = !ESConnector.version;
 }
 

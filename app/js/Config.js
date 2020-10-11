@@ -9,6 +9,8 @@ const Config = {
     WRONG_DATE_INPUT_FUTURE: "The provided date can not be in the future!",
     WRONG_DATE_INPUT_TWIST: "The start time must be before end time!",
     WRONG_DATE_INPUT_EXIST: "Both time inputs are required!",
+    VERSION_BOOL: "Boolean Query",
+    VERSION_TFIDF: "TF.IDF Query",
 
 };
 
