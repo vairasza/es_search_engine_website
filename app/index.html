@@ -8,59 +8,90 @@
 </head>
 
 <body>
+    <!-- allows user to switch between boolean and tfidf querying -->
     <div class="version-switch-container">
         <label class="switch">
             <input type="checkbox" class="switch-input">
             <span class="slider round"></span>
         </label>
-        <span class="version-switch-text">Currently using version: <span class="es-search-version">1</span></span>
+        <span class="version-switch-text">Currently using version: <span class="es-search-version">Boolean Query</span></span>
     </div>
+    <div class="info-icon" title="blabla">&#9432 Info</div>
 
+    <!-- displays an error to the user if no parameter has been set or no result has been returned by elasticsearch -->
     <div class="error-container hidden"></div>
 
+    <!-- shows handling of the application to the user -->
+    <div class="modal hidden">
+        <div class="modal-content">
+            <p>Guide on using the Search Engine:</p>
+            <ul class="modal-list">
+                <li><p>The Search Engine can handle multiple input parameters at once.</p></li>
+                <li><p>If you want to include a parameter e.g. title click the checkbox next to the title.</p></li>
+                <li><p>Checkboxes can be "must" (input field context must be contained) or "should" (input field context can be included). See their title if you hover over the checkboxes.</p></li>
+                <li><p>In the title and content input field, you can type in multiple terms seperated by command followed by whistespace.</p></li>
+                <ul>
+                    <li><p>If you want to exlcude a term in title or content, start the term with a "!".</p></li>
+                    <li><p>Start with "?" as an additional operator if the term should be included in the search engines answer.</p></li>
+                    <li><p>example: "hillary clinton, !donald trump, ?white house, !america, USA"</p></li>
+                </ul>
+                <li><p>published from ... to ... requires a valid date format.</p></li>
+            </ul>
+            <button class="button button-close-modal" type="button">OK</button>
+        </div>
+    </div>
+
+    <!-- container for search engine -->
     <div class="search-engine-container">
         <div class="title-container">
             <h1 class="title">ES Search Engine for 1 Million Articles Database</h1>
         </div>
 
+        <!-- contains checkboxes with must/should and input fields -->
         <div class="input-container">
+            <!-- user can seperate terms with a comma followed by a whitespace, if user wants to exclude a term, write ! before a term,
+            ? if term should be included. example: "hillary clinton, !donald trump, ?white house, !america, USA" -->
             <div class ="wrapper wrapper-title">
-                <p>Title:</p>
-                <input type="checkbox" class="checkbox checkbox-title">
+                <span>Title:</span>
+                <input type="checkbox" class="checkbox checkbox-title" title="must contain title">
+                <br>
                 <input type="text" class="input-title" placeholder="..." minlength="0" maxlength="40" />
             </div>
             
             <div class ="wrapper wrapper-content">
-                <p>Content:</p>
-                <input type="checkbox" class="checkbox checkbox-content">
+                <span>Content:</span>
+                <input type="checkbox" class="checkbox checkbox-content" title="must contain content">
+                <br>
                 <input type="text" class="input-content" placeholder="..." minlength="0" maxlength="40" />
             </div>
             
+            <!-- user can choose if fields must or should be contained in the answer -->
             <div class ="wrapper wrapper-media-type">
-                <p>Media Type:</p>
-                <input type="checkbox" class="checkbox checkbox-media-type">
+                <span>Media Type:</span>
+                <input type="checkbox" class="checkbox checkbox-media-type-must" title="must contain media type" >
+                <input type="checkbox" class="checkbox checkbox-media-type-should" title="should contain media type">
+                <br>
                 <input list="list-media-type" class="input-media-type">
                 <datalist id="list-media-type">
                     <option value="News">
                     <option value="Blog">
-                    <!-- load more on start -->
                 </datalist>
             </div>
             
             <div class ="wrapper wrapper-source">
-                <p>Source:</p>
-                <input type="checkbox" class="checkbox checkbox-source">
-                <input list="list-source" class="input-source">
-                <datalist id="list-source">
-                    <option value="Huffington Post">
-                    <option value="New York Times"></option>
-                    <!-- load more on start // replace for empty input field if too many sources -->
-                </datalist>
+                <span>Source:</span>
+                <input type="checkbox" class="checkbox checkbox-source-must" title="must contain source">
+                <input type="checkbox" class="checkbox checkbox-source-should" title="should contain source">
+                <br>
+                <input type="text" class="input-source" placeholder="..." minlength="0" maxlength="40" />
+                
             </div>
             
+            <!-- both dates are required!!! -->
             <div class ="wrapper wrapper-published">
-                <p>Published from ... to ... :</p>
-                <input type="checkbox" class="checkbox checkbox-published">
+                <span>Published from ... to ... :</span>
+                <input type="checkbox" class="checkbox checkbox-published" title="must contain time range">
+                <br>
                 <input type="date" class="input-published-from">
                 <input type="date" class="input-published-to">
             </div>
@@ -72,7 +103,6 @@
         </div>
 
         <div class="result-container">
-            <!-- render K=10 results here -->
         </div>
 
     </div>

@@ -22,28 +22,90 @@ async function fetchAPI (url, body, method) {
 function processQuery (query) {
     let newQuery = {
         "query": {
-            "bool": {
-                "must": [],
-            },
+            "bool": {},
         },
     };
 
+    //title/content: write each term seperated with comma, start term with ! -> must not, ? -> should
+    //diff query.mediatype must/should; query.source must/should
+
+    //add must, should, must not if needed
+    if (query.title || query.content || query.mediaType || query.source || query.publishedFrom) {
+        newQuery.query.bool.must = [];
+    }
+
+    if ((query.mediaType && query.mediaType.should) || (query.source && query.source.should) || (query.title && (/\?/).test(query.title)) || (query.content && (/\?/).test(query.content))) {
+        newQuery.query.bool.should = [];
+    }
+
+    if ((query.title && (/!/).test(query.title)) || (query.content && (/!/).test(query.content))) {
+        newQuery.query.bool.must_not = [];
+    }
+
+    //add content from inputs to query object
+    //split title and content
     if (query.title) {
-        newQuery.query.bool.must.push({ "match": { "title": query.title }});
+        let words = query.title.split(", ");
+
+        words.forEach(item => {
+            let word = item;
+
+            if ((/^!.*$/).test(word)) {
+                word = word.substring(1).trim();
+                newQuery.query.bool.must_not.push({ "match": { "title": word }});
+            }
+            else if ((/^\?.*$/).test(word)) {
+                word = word.substring(1).trim();
+                newQuery.query.bool.should.push({ "match": { "title": word }});
+            }
+            else {
+                word = word.trim();
+                newQuery.query.bool.must.push({ "match": { "title": word }});
+            }
+        });
     }
 
     if (query.content) {
-        newQuery.query.bool.must.push({ "match": { "content": query.content }});
+        let words = query.content.split(", ");
+
+        words.forEach(item => {
+            let word = item;
+
+            if ((/^!.*$/).test(word)) {
+                word = word.substring(1).trim();
+                newQuery.query.bool.must_not.push({ "match": { "content": word }});
+            }
+            else if ((/^\?.*$/).test(word)) {
+                word = word.substring(1).trim();
+                newQuery.query.bool.should.push({ "match": { "content": word }});
+            }
+            else {
+                word = word.trim();
+                newQuery.query.bool.must.push({ "match": { "content": word }});
+            }
+        });
     }
 
-    if (query.mediaType) {
-        newQuery.query.bool.must.push({ "match": { "media-type": query.mediaType }});
+    if (query.mediaType && query.mediaType.value) {
+        if (query.mediaType.must) {
+            newQuery.query.bool.must.push({ "match": { "media-type": query.mediaType.value }});
+        }
+        else {
+            newQuery.query.bool.should.push({ "match": { "media-type": query.mediaType.value }});
+        }
+       
     }
 
-    if (query.source) {
-        newQuery.query.bool.must.push({ "match": { "source": query.source }});
+    if (query.source && query.source.value) {
+        if (query.source.must) {
+            newQuery.query.bool.must.push({ "match": { "source": query.source.value }});
+        }
+        else {
+            newQuery.query.bool.should.push({ "match": { "source": query.source.value }});
+        }
     }
 
+    //require range
     if (query.publishedFrom) {
         newQuery.query.bool.must.push({
             "range": { 

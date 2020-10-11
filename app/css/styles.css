@@ -160,7 +160,7 @@ input {
 }
 
 input:checked + .slider {
-    ground-color: #4CAF50;
+    background-color: #4CAF50;
 }
 
 input:checked + .slider:before {
@@ -181,7 +181,7 @@ input:checked + .slider:before {
 .version-switch-container {
     position: absolute;
     height: 25px;
-    width: 290px;
+    width: 350px;
     padding: 10px;
 }
 
@@ -211,4 +211,43 @@ input:checked + .slider:before {
 
 .hidden {
     display: none;
+}
+
+.info-icon {
+    position: fixed;
+    font-size: 30px;
+    left: 1%;
+    top: 5%;
+}
+
+.info-icon:hover {
+    background-color: #69c08f;
+    cursor: pointer;
+}
+
+.modal {
+    color: black;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, .5);
+}
+.modal-content {
+    background-color: #f4f4f4;
+    margin: 10% auto;
+    padding: 3%;
+    width: 60%;
+}
+.modal-list {
+    margin-bottom: 5%;
+}
+
+.button-close-modal {
+    padding: 1em 2em;
+    margin: auto;
+    display: block;
 }

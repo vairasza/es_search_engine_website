@@ -7,8 +7,12 @@ const SearchEngineView = {
 
     checkBoxTitle: document.querySelector(".checkbox-title"),
     checkBoxContent: document.querySelector(".checkbox-content"),
-    checkBoxMediaType: document.querySelector(".checkbox-media-type"),
-    checkBoxSource: document.querySelector(".checkbox-source"),
+
+    checkBoxMediaTypeMust: document.querySelector(".checkbox-media-type-must"),
+    checkBoxMediaTypeShould: document.querySelector(".checkbox-media-type-should"),
+    checkBoxSourceMust: document.querySelector(".checkbox-source-must"),
+    checkBoxSourceShould: document.querySelector(".checkbox-source-should"),
+
     checkBoxPublished: document.querySelector(".checkbox-published"),
 
     //input
@@ -23,6 +27,7 @@ const SearchEngineView = {
     buttonReset: document.querySelector(".button-reset-input"),
     buttonSearchRequest: document.querySelector(".button-search-request"),
     buttonError: document.querySelector(".button-error-confirmation"),
+    buttonModal: document.querySelector(".button-close-modal"),
 
     //container
     errorContainer: document.querySelector(".error-container"),
@@ -30,6 +35,10 @@ const SearchEngineView = {
     //version switch
     versionSwitch: document.querySelector(".switch-input"),
     versionText: document.querySelector(".es-search-version"),
+
+    //modal
+    modal: document.querySelector(".modal"),
+    modalInfoIcon: document.querySelector(".info-icon"),
 
     /* renders processed result from elasticsearch query with fix template */
     renderResult (content) {
@@ -56,8 +65,8 @@ const SearchEngineView = {
         let inputValues = {
             title: (this.checkBoxTitle.checked && this.inputTitle !== "") ? this.inputTitle.value : null,
             content: (this.checkBoxContent.checked && this.inputContent !== "") ? this.inputContent.value : null,
-            mediaType: (this.checkBoxMediaType.checked && this.inputMediaType !== "") ? this.inputMediaType.value : null,
-            source: (this.checkBoxSource.checked && this.inputSource !== "") ? this.inputSource.value : null,
+            mediaType: ((this.checkBoxMediaTypeMust.checked || this.checkBoxMediaTypeShould.checked) && this.inputMediaType !== "") ? { value: this.inputMediaType.value, must: this.checkBoxMediaTypeMust.checked, should: this.checkBoxMediaTypeShould.checked } : null,
+            source: ((this.checkBoxSourceMust.checked || this.checkBoxSourceShould.checked) && this.inputSource !== "") ? { value: this.inputSource.value, must: this.checkBoxSourceMust.checked, should: this.checkBoxSourceShould.checked } : null,
             publishedFrom: (this.checkBoxPublished.checked && this.inputPublishedFrom !== "") ? this.inputPublishedFrom.value : null,
             publishedTo: (this.checkBoxPublished.checked && this.inputPublishedTo !== "") ? this.inputPublishedTo.value : null,
         };
@@ -85,11 +94,28 @@ const SearchEngineView = {
         document.querySelector(".result-container").innerHTML = null;
     },
 
+    //eventlistener sets checkbox to false if sibling checkbox has been checked
+    uncheckMediaTypeMust () {
+        this.checkBoxMediaTypeMust.checked = false;
+    },
+
+    uncheckMediaTypeShould () {
+        this.checkBoxMediaTypeShould.checked = false;
+    },
+    uncheckSourceMust () {
+        this.checkBoxSourceMust.checked = false;
+    },
+    uncheckSourceShould () {
+        this.checkBoxSourceShould.checked = false;
+    },
+
     resetCheckBoxes () {
         this.checkBoxTitle.checked = false;
         this.checkBoxContent.checked = false;
-        this.checkBoxMediaType.checked = false;
-        this.checkBoxSource.checked = false;
+        this.checkBoxMediaTypeMust.checked = false;
+        this.checkBoxMediaTypeShould.checked = false;
+        this.checkBoxSourceMust.checked = false;
+        this.checkBoxSourceShould.checked = false;
         this.checkBoxPublished.checked = false;
     },
 
@@ -107,8 +133,10 @@ const SearchEngineView = {
 
         this.checkBoxTitle.disabled = true;
         this.checkBoxContent.disabled = true;
-        this.checkBoxMediaType.disabled = true;
-        this.checkBoxSource.disabled = true;
+        this.checkBoxMediaTypeMust.disabled = true;
+        this.checkBoxMediaTypeShould.disabled = true;
+        this.checkBoxSourceMust.disabled = true;
+        this.checkBoxSourceShould.disabled = true;
         this.checkBoxPublished.disabled = true;
 
         this.inputTitle.disabled = true;
@@ -124,8 +152,10 @@ const SearchEngineView = {
 
         this.checkBoxTitle.disabled = false;
         this.checkBoxContent.disabled = false;
-        this.checkBoxMediaType.disabled = false;
-        this.checkBoxSource.disabled = false;
+        this.checkBoxMediaTypeMust.disabled = false;
+        this.checkBoxMediaTypeShould.disabled = false;
+        this.checkBoxSourceMust.disabled = false;
+        this.checkBoxSourceShould.disabled = false;
         this.checkBoxPublished.disabled = false;
 
         this.inputTitle.disabled = false;
@@ -153,6 +183,14 @@ const SearchEngineView = {
             this.errorContainer.classList.add("hidden");
             callback();
         }.bind(this));
+    },
+
+    showModal () {
+        this.modal.classList.remove("hidden");
+    },
+
+    hideModal () {
+        this.modal.classList.add("hidden");
     },
 
 };
