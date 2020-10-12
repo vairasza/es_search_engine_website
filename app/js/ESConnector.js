@@ -24,6 +24,7 @@ function processQuery (query) {
         "query": {
             "bool": {},
         },
+        "size": 100,
     };
 
     //title/content: write each term seperated with comma, start term with ! -> must not, ? -> should

@@ -16,7 +16,7 @@
         </label>
         <span class="version-switch-text">Currently using version: <span class="es-search-version">Boolean Query</span></span>
     </div>
-    <div class="info-icon" title="blabla">&#9432 Info</div>
+    <div class="info-icon">&#9432 Info</div>
 
     <!-- displays an error to the user if no parameter has been set or no result has been returned by elasticsearch -->
     <div class="error-container hidden"></div>
@@ -55,14 +55,14 @@
                 <span>Title:</span>
                 <input type="checkbox" class="checkbox checkbox-title" title="must contain title">
                 <br>
-                <input type="text" class="input-title" placeholder="..." minlength="0" maxlength="40" />
+                <input type="text" class="input-title" placeholder="..." minlength="0" maxlength="120" />
             </div>
             
             <div class ="wrapper wrapper-content">
                 <span>Content:</span>
                 <input type="checkbox" class="checkbox checkbox-content" title="must contain content">
                 <br>
-                <input type="text" class="input-content" placeholder="..." minlength="0" maxlength="40" />
+                <input type="text" class="input-content" placeholder="..." minlength="0" maxlength="120" />
             </div>
             
             <!-- user can choose if fields must or should be contained in the answer -->
@@ -83,7 +83,7 @@
                 <input type="checkbox" class="checkbox checkbox-source-must" title="must contain source">
                 <input type="checkbox" class="checkbox checkbox-source-should" title="should contain source">
                 <br>
-                <input type="text" class="input-source" placeholder="..." minlength="0" maxlength="40" />
+                <input type="text" class="input-source" placeholder="..." minlength="0" maxlength="120" />
                 
             </div>
             
