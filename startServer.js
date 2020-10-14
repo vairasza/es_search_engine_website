@@ -9,6 +9,8 @@ const PORT = 8001;
 const express = require("express");
 const { Client } = require("@elastic/elasticsearch");
 const bodyParser = require("body-parser");
+const fs = require("fs");
+const { v4: uuidv4 } = require("uuid");
 
 /* declarations */
 const client = new Client({ node: ES_CONNECT_URL });
@@ -34,6 +36,16 @@ app.post("/api", async (req, res) => {
             status: 200,
             body: result,
         });
+
+        /*
+        //save result to file so queries can be compared and evaluated
+        fs.writeFile(`./${uuidv4()}.json`, JSON.stringify(result.body), "utf-8", (err) => {
+            if (err) {
+                //eslint-disable-next-line
+                console.log(err);
+            }  
+        }); 
+        */       
     }
     catch (err) {
         res.json({

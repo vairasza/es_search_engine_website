@@ -1,7 +1,7 @@
 /* eslint-env browser */
 
 const Config = {
-    DB_NAME: "studienleistung_standard",
+    DB_NAME: "studienleistung_ir",
     DB_NAME_TFIDF: "studienleistung_tfidf",
     ES_CONNECT_URL: "http://localhost:8001/api",
     STATUS_200: 200,
@@ -12,7 +12,6 @@ const Config = {
     WRONG_DATE_INPUT_EXIST: "Both time inputs are required!",
     VERSION_BOOL: "Boolean Query",
     VERSION_TFIDF: "TF.IDF Query",
-
 };
 
 Object.freeze(Config);
