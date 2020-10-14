@@ -117,6 +117,8 @@ function switchVersion (event) {
     SearchEngineView.versionText.innerHTML = (event.target.checked) ? Config.VERSION_TFIDF : Config.VERSION_BOOL;
     ESConnector.version = !ESConnector.version;
     SearchEngineView.changeHideCheckbox(ESConnector.version);
+    SearchEngineView.resetInputs();
+    SearchEngineView.resetCheckBoxes();
 }
 
 init();
