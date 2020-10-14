@@ -97,15 +97,15 @@ function checkValidDateInput (callback) {
     }
     //one of the input terms does not exist
     else if (!start || !end) {
-        callback({ status: false, message: Config.WRONG_DATE_INPUT_EXIST});
+        callback({ status: false, message: Config.WRONG_DATE_INPUT_EXIST });
     }
     //check if start is earlier than end
     else if (start > end) {
-        callback({ status: false, message: Config.WRONG_DATE_INPUT_TWIST});
+        callback({ status: false, message: Config.WRONG_DATE_INPUT_TWIST });
     }
     //check if input terms are in the future
     else if (start > today || end > today) {
-        callback({ status: false, message: Config.WRONG_DATE_INPUT_FUTURE});
+        callback({ status: false, message: Config.WRONG_DATE_INPUT_FUTURE });
     }
     else {
         callback({ status: true });

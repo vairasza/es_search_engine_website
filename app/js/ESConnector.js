@@ -185,18 +185,8 @@ const ESConnector = {
     version: true,
 
     async makeQuery (query, callback) {
-        var processedQuery,
-        result;
-        if(this.version){
-            processedQuery = processQueryBoolean(query);
-
-            result = await fetchAPI(Config.ES_CONNECT_URL, processedQuery, "POST");
-        }
-        else{
-            processedQuery = processQueryTFIDF(query);
-
-            result = await fetchAPI(Config.ES_CONNECT_URL, processedQuery, "POST");
-        }
+        const processedQuery = (this.version) ? processQueryBoolean(query) : processQueryTFIDF(query),
+        result = await fetchAPI(Config.ES_CONNECT_URL, processedQuery, "POST");
 
         if (result.status === Config.STATUS_200) {
 
