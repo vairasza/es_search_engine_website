@@ -12,6 +12,7 @@ const Config = {
     WRONG_DATE_INPUT_EXIST: "Both time inputs are required!",
     VERSION_BOOL: "Boolean Query",
     VERSION_TFIDF: "TF.IDF Query",
+    NUMBER_SHOWEN_ELEMENTS: 100,
 };
 
 Object.freeze(Config);

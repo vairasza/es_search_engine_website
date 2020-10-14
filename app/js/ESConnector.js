@@ -24,7 +24,7 @@ function processQueryBoolean (query) {
         "query": {
             "bool": {},
         },
-        "size": 100,
+        "size": Config.NUMBER_SHOWEN_ELEMENTS,
     };
 
     //title/content: write each term seperated with comma, start term with ! -> must not, ? -> should
@@ -128,6 +128,7 @@ function processQueryTFIDF(query){
                 "should": [],
             },
         },
+        "size": Config.NUMBER_SHOWEN_ELEMENTS,
     };
 
     if(query.title){
