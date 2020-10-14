@@ -41,7 +41,7 @@ function makeQuery () {
             SearchEngineView.getButtonReset().removeEventListener("click", resetInput);
             SearchEngineView.getButtonSearchRequest().removeEventListener("click", makeQuery);
 
-            const values = SearchEngineView.getCheckedValuesAsObject();
+            const values = SearchEngineView.getCheckedValuesAsObject(ESConnector.version);
 
             if (Object.keys(values).length > 0) {
                 ESConnector.makeQuery(values, (result) => {
@@ -116,6 +116,7 @@ function switchVersion (event) {
     //change text to what ever versions we are using
     SearchEngineView.versionText.innerHTML = (event.target.checked) ? Config.VERSION_TFIDF : Config.VERSION_BOOL;
     ESConnector.version = !ESConnector.version;
+    SearchEngineView.changeHideCheckbox(ESConnector.version);
 }
 
 init();
