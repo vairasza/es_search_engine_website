@@ -19,7 +19,7 @@ async function fetchAPI (url, body, method) {
 }
 
 /* builds a query for elasticsearch search with parameters from input fields */
-function processQuery (query) {
+function processQueryBoolean (query) {
     let newQuery = {
         "query": {
             "bool": {},
@@ -121,6 +121,45 @@ function processQuery (query) {
     return { database: Config.DB_NAME, request: newQuery };
 }
 
+function processQueryTFIDF(query){
+    let newQuery = {
+        "query": {
+            "bool": {
+                "should": [],
+            },
+        },
+    };
+
+    if(query.title){
+        newQuery.query.bool.should.push({"match": {"title": query.title}});
+    }
+
+    if(query.content){
+        newQuery.query.bool.should.push({"match": {"content": query.content}});
+    }
+
+    if(query.mediaType.value){
+        newQuery.query.bool.should.push({"match": {"media-type": query.mediaType.value}});
+    }
+
+    if(query.source.value){
+        newQuery.query.bool.should.push({"match": {"source": query.source.value}});
+    }
+
+    if (query.publishedFrom) {
+        newQuery.query.bool.should.push({
+            "range": { 
+                "published": {
+                    "gte": query.publishedFrom,
+                    "lte": query.publishedTo,
+                },
+            },
+        });         
+    }
+
+    return {database: Config.DB_NAME_TFIDF, request: newQuery};
+}
+
 /* remodeling data from server in order to use them properly in the render template */
 function processResult (result) {
     let response = [];
@@ -145,10 +184,18 @@ const ESConnector = {
     version: true,
 
     async makeQuery (query, callback) {
+        var processedQuery,
+        result;
+        if(this.version){
+            processedQuery = processQueryBoolean(query);
 
-        const processedQuery = processQuery(query);
+            result = await fetchAPI(Config.ES_CONNECT_URL, processedQuery, "POST");
+        }
+        else{
+            processedQuery = processQueryTFIDF(query);
 
-        const result = await fetchAPI(Config.ES_CONNECT_URL, processedQuery, "POST");
+            result = await fetchAPI(Config.ES_CONNECT_URL, processedQuery, "POST");
+        }
 
         if (result.status === Config.STATUS_200) {
 

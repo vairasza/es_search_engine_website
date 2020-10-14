@@ -61,16 +61,28 @@ const SearchEngineView = {
     },
 
     /* reads values from input fields that have a checked checkbox and puts them into an object */
-    getCheckedValuesAsObject () {
-        let inputValues = {
-            title: (this.checkBoxTitle.checked && this.inputTitle !== "") ? this.inputTitle.value : null,
-            content: (this.checkBoxContent.checked && this.inputContent !== "") ? this.inputContent.value : null,
-            mediaType: ((this.checkBoxMediaTypeMust.checked || this.checkBoxMediaTypeShould.checked) && this.inputMediaType !== "") ? { value: this.inputMediaType.value, must: this.checkBoxMediaTypeMust.checked, should: this.checkBoxMediaTypeShould.checked } : null,
-            source: ((this.checkBoxSourceMust.checked || this.checkBoxSourceShould.checked) && this.inputSource !== "") ? { value: this.inputSource.value, must: this.checkBoxSourceMust.checked, should: this.checkBoxSourceShould.checked } : null,
-            publishedFrom: (this.checkBoxPublished.checked && this.inputPublishedFrom !== "") ? this.inputPublishedFrom.value : null,
-            publishedTo: (this.checkBoxPublished.checked && this.inputPublishedTo !== "") ? this.inputPublishedTo.value : null,
-        };
-
+    getCheckedValuesAsObject (version) {
+        let inputValues;
+        if(version){
+            inputValues = {
+                title: (this.checkBoxTitle.checked && this.inputTitle !== "") ? this.inputTitle.value : null,
+                content: (this.checkBoxContent.checked && this.inputContent !== "") ? this.inputContent.value : null,
+                mediaType: ((this.checkBoxMediaTypeMust.checked || this.checkBoxMediaTypeShould.checked) && this.inputMediaType !== "") ? { value: this.inputMediaType.value, must: this.checkBoxMediaTypeMust.checked, should: this.checkBoxMediaTypeShould.checked } : null,
+                source: ((this.checkBoxSourceMust.checked || this.checkBoxSourceShould.checked) && this.inputSource !== "") ? { value: this.inputSource.value, must: this.checkBoxSourceMust.checked, should: this.checkBoxSourceShould.checked } : null,
+                publishedFrom: (this.checkBoxPublished.checked && this.inputPublishedFrom !== "") ? this.inputPublishedFrom.value : null,
+                publishedTo: (this.checkBoxPublished.checked && this.inputPublishedTo !== "") ? this.inputPublishedTo.value : null,
+            };
+        }
+        else{
+            inputValues = {
+                title: (this.inputTitle !== "") ? this.inputTitle.value : null,
+                content: (this.inputContent !== "") ? this.inputContent.value : null,
+                mediaType: (this.inputMediaType !== "") ? { value: this.inputMediaType.value, must: this.checkBoxMediaTypeMust.checked, should: this.checkBoxMediaTypeShould.checked } : null,
+                source: (this.inputSource !== "") ? { value: this.inputSource.value, must: this.checkBoxSourceMust.checked, should: this.checkBoxSourceShould.checked } : null,
+                publishedFrom: (this.inputPublishedFrom !== "") ? this.inputPublishedFrom.value : null,
+                publishedTo: (this.inputPublishedTo !== "") ? this.inputPublishedTo.value : null,
+            };
+        }
         for (let key in inputValues) {
             if (Object.prototype.hasOwnProperty.call(inputValues, key)) {
                 if (inputValues[key] === null) {
@@ -191,6 +203,28 @@ const SearchEngineView = {
             hideModal(this.modal);
         }.bind(this));
 
+    },
+
+    changeHideCheckbox(version){
+        if(version){
+            this.checkBoxTitle.classList.remove("hidden");
+            this.checkBoxContent.classList.remove("hidden");
+            this.checkBoxMediaTypeMust.classList.remove("hidden");
+            this.checkBoxMediaTypeShould.classList.remove("hidden");
+            this.checkBoxSourceMust.classList.remove("hidden");
+            this.checkBoxSourceShould.classList.remove("hidden");
+            this.checkBoxPublished.classList.remove("hidden");
+        }
+        else{
+            this.checkBoxTitle.classList.add("hidden");
+            this.checkBoxContent.classList.add("hidden");
+            this.checkBoxMediaTypeMust.classList.add("hidden");
+            this.checkBoxMediaTypeShould.classList.add("hidden");
+            this.checkBoxSourceMust.classList.add("hidden");
+            this.checkBoxSourceShould.classList.add("hidden");
+            this.checkBoxPublished.classList.add("hidden");
+        }
+        
     },
 
 };
